@@ -1,0 +1,47 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MenuPageRootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#33414E"
+    android:descendantFocusability="beforeDescendants">
+    <ImageView
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:id="@+id/imageView1" />
+    <TextView
+        android:layout_alignParentTop="true"
+        android:text="Application version "
+        android:textColor = "@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAppVerion" />
+    <ListView
+        android:layout_below="@+id/txtAppVerion"
+      android:layout_above="@+id/copyright1"
+      android:layout_marginTop="80dp"
+      android:minWidth="25px"
+      android:minHeight="25px"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:id="@+id/MenulistView" />
+    <TextView
+        android:id = "@+id/copyright1"
+        android:layout_marginTop = "20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft = "true"
+        android:gravity = "center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saver"
+        android:textColor="#ffffffff" />
+</RelativeLayout>

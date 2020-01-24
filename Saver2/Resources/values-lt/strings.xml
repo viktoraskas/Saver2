@@ -1,0 +1,68 @@
+﻿<resources>
+  <string name="app_name">Saver2</string>
+  <string name="action_settings">Settings</string>
+  <string name="ws_online">online</string>
+  <string name="ws_c_1a">c_1a</string>
+  <string name="ws_r_auth">r_auth</string>
+
+  <string name="message_no_internet">Nėra interneto ryšio arba serveris nepasiekiamas!</string>
+  <string name="message_wrong_operation">Klaidinga operacija!</string>
+  <string name="message_ws_return_not_00">Kažkas ne taip. Klaida</string>
+  <string name="message_no_webURL">Nerastas parametras - webURL</string>
+  <string name="message_no_wsPass">Nerastas parametras - wsPass</string>
+  <string name="message_no_ID">Nerastas parametras - ID</string>
+  <string name="message_not_ready_yet">Atsiprašome, dar neparuošta</string>
+  <string name="message_ws_allive">Serveris pasiekiamas</string>
+  <string name="message_saved">Išsaugota</string>
+  <string name="message_exit">Ar tikrai norite išeiti?</string>
+  <string name="message_error">Klaida</string>
+  <string name="message_please_wait">Prašom palaukti...</string>
+  <string name="message_scan_operation">Prašom nuskanuoti operaciją</string>
+  <string name="message_edit_config_parameter">Ar norite koreguoti nustatymą - </string>
+  <string name="message_nothing_to_show">Nėra ko rodyti... </string>
+  <string name="message_unknown_error">Nežinoma klaida... </string>
+
+  <string name="page_name_login">Prisijungti</string>
+  <string name="page_name_menu">Meniu</string>
+  <string name="page_name_auto">AUTOMATINIS RĖŽIMAS</string>
+  <string name="page_name_settings">Nustatymai</string>
+
+  <string-array name="app_menu">
+    <item>AUTOMATINIS</item>
+    <item>RANKINIS</item>
+    <item>NUSTATYMAI</item>
+  </string-array>
+  
+  <string name="prompt_username">Vartotojo vardas</string>
+  <string name="prompt_password">Slaptažodis</string>
+  <string name="action_sign_in">Prisijungti</string>
+  <string name="invalid_user_name">Netinkamas el.p. adresas</string>
+  <string name="invalid_password">Per trumpas slaptažodis</string>
+  <string name="incorrect_password">Neteisingas slaptažodis</string>
+  <string name="field_required">Užpildykite šį lauką</string>
+  <string name="ActionOK">Gerai</string>
+  <string name="ActionSave">Saugoti</string>
+  <string name="ActionCancel">Atsisakyti</string>
+  <string name="ActionTest">Bandyti</string>
+  <string name="ActionEdit">Redaguoti</string>
+  <string name="ActionForward">Pirmyn</string>
+  <string name="ActionBackward">Atgal</string>
+  <string name="ActionOn">Įjungti</string>
+  <string name="ActionOff">Išjungti</string>
+  <string name="ActionEnable">Įgalinti</string>
+  <string name="ActionDisable">Išjungti</string>
+  <string name="ActionUp">Aukštyn</string>
+  <string name="ActionDown">Žemyn</string>
+  <string name="ActionTouch">Liesti</string>
+  <string name="ActionPress">Spausti</string>
+  <string name="ActionRelease">Atjungti</string>
+  <string name="hintScanBarcode">Nuskanuokite arba įveskite barkodą</string>
+  <string name="ActionAllItems">Visos prekės</string>
+  <string name="ActionScannedItems">Rodyti visus</string>
+  <string name="ActionLeftToScanItems">Rodyti nebaigtus</string>
+  <string name="ActionQR">Skanuoti QR</string>
+  <string name="ActionGetConfig">Konfiguruoti</string>
+
+  <string name="TextTotals">Viso</string>
+  <string name="TextAppVersion">Programos versija </string>
+</resources>

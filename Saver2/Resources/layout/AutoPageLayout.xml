@@ -1,0 +1,82 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Auto2PageLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33414E"
+    android:padding = "4dp">
+    <android.support.v4.widget.Space
+      android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/spaceAuto1" />
+      <EditText
+        android:layout_below ="@+id/spaceAuto1"
+        android:text = ""
+        android:maxLines = "1"
+        android:focusedByDefault = "true"
+        android:paddingHorizontal = "10dp"
+        android:textSize = "12sp"
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="35dp"
+        android:id="@+id/editTextBarcode" />
+    <android.support.v4.widget.Space
+      android:layout_below ="@+id/editTextBarcode"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:id="@+id/spaceAuto2" />
+        <RelativeLayout
+          android:layout_below = "@+id/spaceAuto2"
+          android:background = "@android:color/white"
+          android:minWidth="0px"
+          android:minHeight="0px"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:paddingHorizontal = "4dp"
+          android:id="@+id/relativeLayoutAutoPage1">
+            <TextView
+              android:padding = "2dp"
+              android:textSize = "20sp"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentLeft = "true"
+              android:text=""
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textViewAutoIcon" />
+            <TextView
+              android:padding = "2dp"
+              android:textSize = "20sp"
+              android:paddingLeft = "10dp"
+              android:layout_toEndOf = "@+id/textViewAutoIcon"
+              android:layout_alignParentTop="true"
+              android:text=""
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textViewAutoAtiveLoc" />
+        </RelativeLayout>
+  <android.support.v7.widget.RecyclerView
+    android:layout_below="@+id/relativeLayoutAutoPage1"
+    android:layout_above = "@+id/btnShowAllItems"
+    android:scrollbars="vertical" 
+    android:id="@+id/cardList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+  </android.support.v7.widget.RecyclerView>
+    
+  <Button
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal = "true"
+    android:textSize = "15sp"
+    android:autoSizeTextType="uniform"
+    android:padding = "10dp"
+    android:maxLines = "1"
+    android:background = "#3FB9E3"
+    android:text="@string/ActionLeftToScanItems"
+    android:textColor = "@android:color/white"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/btnShowAllItems" />
+</RelativeLayout>

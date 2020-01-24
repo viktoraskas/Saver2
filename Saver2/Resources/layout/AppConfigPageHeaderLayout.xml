@@ -1,0 +1,101 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" 
+    android:background="#33414E"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+    <TextView
+        android:layout_alignParentTop="true"
+        android:text="Application version "
+        android:textColor = "@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtAppVerion" />
+    <Space
+        android:layout_below="@+id/txtAppVerion"
+        android:id="@+id/acphlSpace2"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <TextView
+        android:layout_below="@+id/acphlSpace2"
+        android:id="@+id/acphLabel1"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/page_name_settings"
+        android:textSize="20dp"
+        android:textColor="#ffffffff" />
+    <Space
+        android:layout_below="@+id/acphLabel1"
+        android:id="@+id/acphlSpace3"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <ListView
+        android:layout_below="@+id/acphlSpace3"
+        android:layout_above="@+id/acphlSpace4"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ConfiglistView" />
+    <Space
+        android:layout_above="@+id/ButtonConfigSave"
+        android:id="@+id/acphlSpace4"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <Button
+        android:layout_above="@+id/acphlSpace1"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/ButtonConfigSave"
+        android:textSize = "14sp"
+        android:textStyle="bold"
+        android:backgroundTint="#3FB9E3"
+        android:textColor="#ffffffff"
+        android:text="@string/ActionSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/acphlSpace1"
+        android:id="@+id/ButtonConfigTest"
+        android:textSize = "14sp"
+        android:textStyle="bold"
+        android:backgroundTint="#3FB9E3"
+        android:textColor="#ffffffff"
+        android:text="@string/ActionTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_above="@+id/acphlSpace1"
+        android:layout_alignParentRight="true"
+        android:id="@+id/ButtonConfigScanQR"
+        android:textSize = "14sp"
+        android:textStyle="bold"
+        android:backgroundTint="#3FB9E3"
+        android:textColor="#ffffffff"
+        android:text="@string/ActionGetConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Space
+        android:layout_above="@+id/acphlCopyright"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:id="@+id/acphlSpace1" />
+    <TextView
+        android:id="@+id/acphlCopyright"
+        android:layout_alignParentBottom = "true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:textAlignment="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Saver ©"
+        android:textColor="#ffffffff" />
+</RelativeLayout>

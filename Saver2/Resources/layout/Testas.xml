@@ -1,0 +1,86 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33414E">
+    <android.support.v4.widget.Space
+      android:layout_alignParentTop="true"
+      android:layout_width="match_parent"
+      android:layout_height="10dp"
+      android:id="@+id/spaceA1" />
+    <EditText
+      android:layout_marginHorizontal="4dp"
+      android:layout_below ="@+id/spaceA1"
+      android:text = ""
+      android:maxLines = "1"
+      android:focusedByDefault = "true"
+      android:paddingHorizontal = "10dp"
+      android:textSize = "12sp"
+      android:background="#eeeeee"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:minWidth="25px"
+      android:minHeight="35dp"
+      android:id="@+id/edtTxtBarcode" />
+    <android.support.v4.widget.Space
+      android:layout_below ="@+id/edtTxtBarcode"
+      android:layout_width="match_parent"
+      android:layout_height="20dp"
+      android:id="@+id/spaceA2" />
+    <RelativeLayout
+      android:layout_marginHorizontal="4dp"
+      android:layout_below = "@+id/spaceA2"
+      android:background = "@android:color/white"
+      android:minWidth="0px"
+      android:minHeight="0px"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:paddingHorizontal = "4dp"
+      android:id="@+id/relativeLayoutAutoP1">
+            <TextView
+              android:padding = "2dp"
+              android:textSize = "20sp"
+              android:layout_alignParentTop="true"
+              android:layout_alignParentLeft = "true"
+              android:text=""
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textViewAIcon" />
+            <TextView
+              android:padding = "2dp"
+              android:textSize = "20sp"
+              android:paddingLeft = "10dp"
+              android:layout_toEndOf = "@+id/textViewAIcon"
+              android:layout_alignParentTop="true"
+              android:text=""
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/textViewAActiveLoc" />
+    </RelativeLayout>
+    <android.support.v4.widget.Space
+        android:layout_below="@+id/relativeLayoutAutoP1"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:id="@+id/spaceA3" />
+    <android.support.v4.view.ViewPager
+        android:background="#33414E"
+        android:layout_below="@+id/spaceA3"
+        android:layout_above="@+id/bottomNavigationView1"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viewPager1" />
+    <android.support.design.widget.BottomNavigationView
+        android:background="#5d6d7b"
+        app:elevation="80dp"
+        app:menu="@menu/auto_navigation_menu"
+        android:layout_alignParentBottom="true"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomNavigationView1" />
+</RelativeLayout>

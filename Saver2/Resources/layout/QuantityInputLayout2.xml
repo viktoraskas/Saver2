@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33414E">
+    <EditText
+        android:inputType="numberDecimal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/editText1" />
+    <GridLayout
+        android:rowCount = "4"
+        android:columnCount = "3"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gridLayout1">
+        <Button
+            android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+android:textStyle = "bold"
+            android:text="1"
+            android:id="@+id/button1" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="2"
+            android:id="@+id/button2" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="3"
+            android:id="@+id/button3" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="4"
+            android:id="@+id/button5" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="5"
+            android:id="@+id/button6" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="6"
+            android:id="@+id/button7" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="7"
+            android:id="@+id/button9" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="8"
+            android:id="@+id/button10" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="9"
+            android:id="@+id/button11" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="0"
+            android:id="@+id/button14" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="."
+            android:id="@+id/button15" />
+        <Button
+          android:backgroundTint = "#3FB9E3"
+          android:textColor="@android:color/white"
+          android:textStyle = "bold"
+            android:text="- / OK"
+            android:id="@+id/button16" />
+    </GridLayout>
+</LinearLayout>

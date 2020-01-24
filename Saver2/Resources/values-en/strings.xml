@@ -1,0 +1,68 @@
+﻿<resources>
+  <string name="app_name">Saver2</string>
+  <string name="action_settings">Settings</string>
+  <string name="ws_online">online</string>
+  <string name="ws_c_1a">c_1a</string>
+  <string name="ws_r_auth">r_auth</string>
+  
+  <string name="message_no_internet">No internet connection or server down!</string>
+  <string name="message_wrong_operation">Wrong operation!</string>
+  <string name="message_ws_return_not_00">Something wrong. Error</string>
+  <string name="message_no_webURL">Parameter was not found - webURL</string>
+  <string name="message_no_wsPass">Parameter was not found - wsPass</string>
+  <string name="message_no_ID">Parameter was not found - ID</string>
+  <string name="message_not_ready_yet">Sorry, not ready yet</string>
+  <string name="message_ws_allive">Server is online</string>
+  <string name="message_saved">Saved</string>
+  <string name="message_exit">Do you want to exit?</string>
+  <string name="message_error">Error</string>
+  <string name="message_please_wait">Please wait...</string>
+  <string name="message_scan_operation">Scan operation please</string>
+  <string name="message_edit_config_parameter">Do you want edit parameter - </string>
+  <string name="message_nothing_to_show">There is nothing to show... </string>
+  <string name="message_unknown_error">Unknown error... </string>
+  
+  <string name="page_name_login">Login</string>
+  <string name="page_name_menu">Menu</string>
+  <string name="page_name_auto">AUTO MODE</string>
+  <string name="page_name_settings">Settings</string>
+
+  <string-array name="app_menu">
+    <item>AUTO</item>
+    <item>MANUAL</item>
+    <item>CONFIG</item>
+  </string-array>
+  
+<string name="prompt_username">Username</string>
+<string name="prompt_password">Password</string>
+<string name="action_sign_in">Login</string>
+<string name="invalid_user_name">This email address is invalid</string>
+<string name="invalid_password">Password is too short</string>
+<string name="incorrect_password">Password is incorrect</string>
+<string name="field_required">This field is required</string>
+  <string name="ActionOK">OK</string>
+  <string name="ActionSave">Save</string>
+  <string name="ActionCancel">Cancel</string>
+  <string name="ActionTest">Test</string>
+  <string name="ActionEdit">Edit</string>
+  <string name="ActionForward">Forward</string>
+  <string name="ActionBackward">Backward</string>
+  <string name="ActionOn">On</string>
+  <string name="ActionOff">Off</string>
+  <string name="ActionEnable">Enable</string>
+  <string name="ActionDisable">Disable</string>
+  <string name="ActionUp">Up</string>
+  <string name="ActionDown">Down</string>
+  <string name="ActionTouch">Touch</string>
+  <string name="ActionPress">Press</string>
+  <string name="ActionRelease">Release</string>
+  <string name="hintScanBarcode">Please scan or enter barcode</string>
+  <string name="ActionAllItems">All items</string>
+  <string name="ActionScannedItems">Show all</string>
+  <string name="ActionLeftToScanItems">Show incomplete</string>
+  <string name="ActionQR">Scan QR</string>
+  <string name="ActionGetConfig">Get CFG</string>
+
+  <string name="TextTotals">Totals</string>
+  <string name="TextAppVersion">Application version </string>
+</resources>

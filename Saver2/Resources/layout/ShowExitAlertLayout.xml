@@ -1,0 +1,78 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#33414E"
+    android:padding = "@dimen/abc_dialog_padding_material"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    
+    <TextView
+        android:textStyle="bold"
+        android:text="@string/message_exit"
+        android:textColor = "@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/textAlert" 
+        android:layout_marginTop = "10dp"
+        android:layout_marginBottom = "10dp"
+        />
+    <LinearLayout
+        android:weightSum = "1"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1" >
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2">
+                <Button
+                android:focusable = "false"
+                android:backgroundTint = "#3FB9E3"
+                android:textStyle="bold"
+                android:textColor = "@android:color/white"
+                android:text="@string/ActionOK"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnExitAlertOK" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_weight="0.5"
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2">
+                <Button
+                android:focusable = "false"
+                android:backgroundTint = "#3FB9E3"
+                android:textStyle="bold"
+                android:textColor = "@android:color/white"
+                android:text="@string/ActionCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnExitAlertCancel" />
+        </LinearLayout>
+
+
+        
+    </LinearLayout>
+
+</LinearLayout>

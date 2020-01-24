@@ -1,0 +1,151 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding = "4dp"
+    android:background="#33414E">
+    <android.support.v7.widget.CardView
+      app:cardBackgroundColor = "@android:color/white"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardView1"
+        app:cardCornerRadius="8dp">
+      <LinearLayout
+            android:paddingHorizontal = "6dp"
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/linearLayout1">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout9">
+                <TextView
+                  android:layout_weight = "1.2"
+                  android:textSize = "20dp"
+                  android:text = "Build"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/textViewIcon1" />
+                <TextView
+                  android:layout_weight = "0.5"
+                  android:textSize = "12dp"
+                  android:textColor = "@android:color/holo_red_dark"
+                  android:text="                           "
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txtvKodas_lc_a_ls" />
+                <TextView
+                  android:layout_weight = "1.2"
+                    android:text="Cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewIcon2" />
+                <TextView
+                  android:layout_weight = "1.2"
+                  android:textColor = "@android:color/black"
+                  android:text="    "
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:id="@+id/txtvKiekis" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout10">
+                <LinearLayout
+                    android:layout_weight = "1.2"
+                    android:orientation="horizontal"
+                    android:minWidth="25px"
+                    android:minHeight="25px"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayout11">
+                  <TextView
+                    android:layout_weight = "1"
+                    android:text="Arc"
+                    android:textSize = "20dp"
+                    android:textColor = "@android:color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewIcon3" />
+                  <TextView
+                    android:layout_weight = "0.5"
+                    android:textSize = "8dp"
+                    android:textColor = "#4889A1"
+                    android:text="KODAS0000001"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtvKodas_ps" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight = "1"
+                    android:gravity = "bottom"
+                    android:orientation="horizontal"
+                    android:minWidth="25px"
+                    android:minHeight="25px"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/linearLayout13">
+                  <TextView
+                    android:layout_weight = "1"
+                    android:textSize = "8dp"
+                    android:textColor = "@android:color/black"
+                    android:text="Pavadinimaszzzzzzzzzzzzzzzzz30"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtvPav" />
+                </LinearLayout>
+              <LinearLayout
+                android:layout_weight = "1"
+                android:gravity = "bottom"
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/linearLayout12">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight = "1"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linearLayout14">
+                      <TextView
+                        android:background = "@drawable/bg_orange"
+                        android:textSize = "8dp"
+                        android:textColor = "@android:color/white"
+                        android:text="            "
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/txtvSerija" />
+                    </LinearLayout>
+                <TextView
+                  android:layout_weight = "1"
+                  android:background = "@drawable/bg_blue"
+                   android:textSize = "8dp"
+                  android:textColor = "@android:color/white"
+                  android:text="            "
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/txtvKodas_os" />
+              </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

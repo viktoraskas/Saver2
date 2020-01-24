@@ -1,0 +1,84 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="#33414E"
+              android:padding = "@dimen/abc_dialog_padding_material"
+              android:orientation="vertical"
+              android:gravity="center_horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    >
+    <TextView
+        android:textStyle="bold"
+        android:text="@string/message_edit_config_parameter"
+        android:textColor = "@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:id="@+id/textViewConfigParameter" 
+        android:layout_marginTop = "10dp"
+        android:layout_marginBottom = "10dp"
+        />
+    <EditText
+        android:textStyle="bold"
+        android:textAppearance = "?android:attr/textAppearanceSmall"
+        android:text=""
+        android:textColor = "@android:color/white"
+        android:maxLines = "1"
+        android:focusable = "true"
+        android:focusableInTouchMode = "true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ConfigValue" >
+        <requestFocus />
+    </EditText>
+    <LinearLayout
+        android:layout_marginTop = "20dp"
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1">
+        <LinearLayout
+          android:gravity="center_horizontal"
+          android:layout_weight="0.5"
+          android:orientation="vertical"
+          android:minWidth="25px"
+          android:minHeight="25px"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2">
+            <Button
+              android:focusable = "false"
+              android:backgroundTint = "#3FB9E3"
+              android:textStyle="bold"
+              android:textColor = "@android:color/white"
+              android:text="@string/ActionSave"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+                android:id="@+id/buttonConfigParameterSave" />
+        </LinearLayout>
+        <LinearLayout
+          android:gravity="center_horizontal"
+          android:layout_weight="0.5"
+          android:orientation="vertical"
+          android:minWidth="25px"
+          android:minHeight="25px"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+            android:id="@+id/linearLayout3">
+            <Button
+              android:focusable = "false"
+              android:backgroundTint = "#3FB9E3"
+              android:textStyle="bold"
+              android:textColor = "@android:color/white"
+              android:text="@string/ActionCancel"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+                android:id="@+id/buttonConfigParameterCancel" />
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
