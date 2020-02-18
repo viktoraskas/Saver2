@@ -10,6 +10,7 @@
             set => _wsMethodName = "c_" + value.ToString().ToLower();
         }
 
+        public const string wsMethodDefault = "0a";
         public static bool online { get; set; }
         public static int volume { get; set; }
         public static string ws_url { get; set; }

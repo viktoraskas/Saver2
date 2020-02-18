@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 using Android.App;
@@ -10,31 +9,26 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Saver2.helpers;
-
 
 namespace Saver2.Adapters
 {
-    class AppConfigAdapter : BaseAdapter<AppConfigItemsClass>
+    class AppConfAdapter : BaseAdapter
     {
 
         Context context;
-        List<AppConfigItemsClass> items;
+        private Dictionary<string, string> items;
 
-        public AppConfigAdapter(Context context, List<AppConfigItemsClass> list)
+        public AppConfAdapter(Context context, Dictionary<string, string> _items)
         {
             this.context = context;
-            items = list;
-        }
-
-        public override AppConfigItemsClass this[int position]
-        {
-            get { return items[position]; }
+            this.items = _items;
         }
 
         public override Java.Lang.Object GetItem(int position)
         {
             return position;
+            //var item = Items[position];
+            //return item as Object;
         }
 
         public override long GetItemId(int position)
@@ -45,14 +39,14 @@ namespace Saver2.Adapters
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             var view = convertView;
-            AppConfigAdapterViewHolder holder = null;
+            AppConfAdapterViewHolder holder = null;
 
             if (view != null)
-                holder = view.Tag as AppConfigAdapterViewHolder;
+                holder = view.Tag as AppConfAdapterViewHolder;
 
             if (holder == null)
             {
-                holder = new AppConfigAdapterViewHolder();
+                holder = new AppConfAdapterViewHolder();
                 var inflater = context.GetSystemService(Context.LayoutInflaterService).JavaCast<LayoutInflater>();
                 //replace with your item and your holder items
                 //comment back in
@@ -65,20 +59,24 @@ namespace Saver2.Adapters
 
             //fill in your items
             //holder.Title.Text = "new text here";
-            holder.ConfigParameterName.Text = items[position].param_name;
-            holder.ConfigParameterValue.Text = items[position].param_value;
+            holder.ConfigParameterName.Text = items.ElementAt(position).Key;
+            holder.ConfigParameterValue.Text = items.ElementAt(position).Value;
             return view;
         }
 
         //Fill in cound here, currently 0
-        public override int Count => items.Count;
+        public override int Count
+        {
+            get
+            {
+                return items.Count;
+            }
+        }
 
     }
 
-    class AppConfigAdapterViewHolder : Java.Lang.Object
+    class AppConfAdapterViewHolder : Java.Lang.Object
     {
-        //Your adapter views to re-use
-        //public TextView Title { get; set; }
         public TextView ConfigParameterName { get; set; }
         public TextView ConfigParameterValue { get; set; }
     }

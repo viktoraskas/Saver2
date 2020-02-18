@@ -16,6 +16,10 @@ using Saver2.Helpers;
 using static Saver2.helpers.ConstantsClass;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Plugin.Connectivity;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace Saver2.Activity
 {
@@ -23,14 +27,14 @@ namespace Saver2.Activity
     public class ConfigPageActivity : AppCompatActivity
     {
         private AppConfigRoot AppConfig;
-        private Button buttonSave, buttonTest, buttonScanQR;
+        private Button buttonSave, buttonTest;
         private ListView listView;
         private ISharedPreferences sharedprefs;
+        EditText GetConfEdtTxt;
+        Dictionary<string, string> cnfg;
+        HideAndShowKeyboard kb;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            System.Threading.Tasks.TaskScheduler.UnobservedTaskException += new EventHandler<System.Threading.Tasks.UnobservedTaskExceptionEventArgs>(TaskScheduler_UnobservedTaskException);
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
-
             base.OnCreate(savedInstanceState);
             //SetContentView(Resource.Layout.AppConfigPageHeaderLayout);
             SetContentView(Resource.Layout.AppConfigPageHeaderLayout);
@@ -39,53 +43,69 @@ namespace Saver2.Activity
             listView.ItemClick += ListView_ItemClick;
             buttonSave = FindViewById<Button>(Resource.Id.ButtonConfigSave);
             buttonTest = FindViewById<Button>(Resource.Id.ButtonConfigTest);
-            buttonScanQR = FindViewById<Button>(Resource.Id.ButtonConfigScanQR);
             buttonSave.Click += ButtonSave_Click;
             buttonTest.Click += ButtonTest_Click;
-            buttonScanQR.Click += ButtonScanQR_Click;
 
             TextView textViewAppVersion = FindViewById<TextView>(Resource.Id.txtAppVerion);
             textViewAppVersion.Text = GetString(Resource.String.TextAppVersion) + " - " + AppConfigClass.AppVersion;
 
+            GetConfEdtTxt = FindViewById<EditText>(Resource.Id.acphlGetConfEdtTxt);
+            GetConfEdtTxt.ShowSoftInputOnFocus = false;
+            GetConfEdtTxt.KeyPress += GetConfEdtTxt_KeyPress;
+            Window.SetSoftInputMode(SoftInput.StateAlwaysHidden);
+            kb = new HideAndShowKeyboard();
+            kb.hideSoftKeyboard(this);
+
         }
-        private void ButtonScanQR_Click(object sender, EventArgs e)
+
+        private void GetConfEdtTxt_KeyPress(object sender, View.KeyEventArgs e)
         {
-            StartActivity(typeof(ScanConfigActivity));
-            //Toast.MakeText(this, GetString(Resource.String.message_not_ready_yet), ToastLength.Short).Show();
+            e.Handled = false;
+            if (e.Event.Action == KeyEventActions.Down && e.KeyCode == Keycode.Enter)
+            {
+                if (IsValidJson(GetConfEdtTxt.Text))
+                {
+                    cnfg = JsonConvert.DeserializeObject<Dictionary<string, string>>(GetConfEdtTxt.Text);
+                    wsParam.aparatoid = cnfg["aparato_id"];
+                    wsParam.user_id = cnfg["service_key"];
+                    wsParam.ws_url = cnfg["ws2Url"];
+                    wsParam.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
+                    saveConfig(cnfg);
+                    // reikia uzkrauti parametru sarasa
+                    listView.Adapter = new AppConfAdapter(this, cnfg);
+                }
+                else
+                {
+                    Signalize.Error(this);
+                    ShowMe(GetString(Resource.String.message_wrong_config_parameters));
+                }
+                GetConfEdtTxt.Text = string.Empty;
+            }
         }
         private async void ButtonTest_Click(object sender, EventArgs e)
         {
-            if (!IsInternetOn.CheckConnectivity(this))
+            if (!IsInternetOn.CheckConnectivity(this) || string.IsNullOrEmpty(sharedprefs.GetString(AppConfigJson, string.Empty)))
             {
+                Signalize.Error(this);
                 return;
             }
-
-            var index = AppConfig.list.FindIndex(a => a.param_name == "web_URL");
-            var ws_url = AppConfig.list[index].param_value;
-            using (var client = new ws2ApiClient(ws_url))
+            using (var client = new ws2ApiClient(wsParam.ws_url))
             {
                 try
                 {
                     var result = await client.GetAsync<OnlineClass>(Resources.GetString(Resource.String.ws_online));
-                        if (result.status == "00")
-                            Toast.MakeText(this, GetString(Resource.String.message_ws_allive), ToastLength.Short).Show();
-                        else
-                            Toast.MakeText(this,
-                                $"{GetString(Resource.String.message_ws_return_not_00)} - {result.status}:{result.description}.",
-                                ToastLength.Short).Show();
+                    if (result.status == "00")
+                        ShowMe($"{GetString(Resource.String.message_ws_allive)} - {result.status}:{result.description}.");
                 }
                 catch (Exception exception)
                 {
-                    Toast.MakeText(this, exception.Message, ToastLength.Short).Show();
+                    ShowMe(exception.Message);
                 }
-                    //Toast.MakeText(this, GetString(Resource.String.message_no_internet), ToastLength.Long).Show();
             }
         }
         private void ButtonSave_Click(object sender, EventArgs e)
         {
-            var str = JsonConvert.SerializeObject(AppConfig);
-            sharedprefs.Edit().PutString(AppConfigJson, str).Commit();
-            Toast.MakeText(this, GetString(Resource.String.message_saved), ToastLength.Short).Show();
+            saveConfig(cnfg);
         }
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
@@ -96,9 +116,9 @@ namespace Saver2.Activity
             Button bnt_cancel = view.FindViewById<Button>(Resource.Id.buttonConfigParameterCancel);
             Button btn_save = view.FindViewById<Button>(Resource.Id.buttonConfigParameterSave);
             TextView text = view.FindViewById<TextView>(Resource.Id.textViewConfigParameter);
-            text.Text = text.Text + AppConfig.list[e.Position].param_name;
+            text.Text = text.Text+cnfg.ElementAt(e.Position).Key;
             EditText editTextConfigValue = view.FindViewById<EditText>(Resource.Id.ConfigValue);
-            editTextConfigValue.Text = AppConfig.list[e.Position].param_value;
+            editTextConfigValue.Text =cnfg.ElementAt(e.Position).Value ;
             editTextConfigValue.SetSelection(editTextConfigValue.Length());
             bnt_cancel.Click += delegate
             {
@@ -107,42 +127,107 @@ namespace Saver2.Activity
             };
             btn_save.Click += delegate
             {
-                AppConfig.list[e.Position].param_value = editTextConfigValue.Text;
-                listView.Adapter = new AppConfigAdapter(this, AppConfig.list);
+                string _key = cnfg.ElementAt(e.Position).Key;
+                //string _value = cnfg.ElementAt(e.Position).Value;
+                string _value = editTextConfigValue.Text;
+
+                if (cnfg.Remove(_key))
+                {
+                    cnfg.Add(_key, _value);
+                }
+                else
+                    ShowMe($"Cant remove key - {_key}");
+               
+                saveConfig(cnfg);
+                //ShowMe(cnfg.ElementAt(e.Position).Key);
+
                 builder.Dismiss();
                 builder.Dispose();
+                
             };
             builder.Show();
         }
         protected override void OnStart()
         {
             base.OnStart();
-            if (!string.IsNullOrEmpty(sharedprefs.GetString(AppConfigJson, string.Empty)))
+            GetView();
+            GetConfEdtTxt.RequestFocus();
+            GetConfEdtTxt.ShowSoftInputOnFocus = false;
+
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            GetView();
+            GetConfEdtTxt.RequestFocus();
+            GetConfEdtTxt.ShowSoftInputOnFocus = false;
+        }
+
+        protected override void OnRestart()
+        {
+            base.OnRestart();
+            GetView();
+            GetConfEdtTxt.RequestFocus();
+            GetConfEdtTxt.ShowSoftInputOnFocus = false;
+        }
+        private static bool IsValidJson(string strInput)
+        {
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
             {
-                AppConfig = JsonConvert.DeserializeObject<AppConfigRoot>(sharedprefs.GetString(AppConfigJson,
-                    string.Empty));
-                listView.Adapter = new AppConfigAdapter(this, AppConfig.list);
+                try
+                {
+                    var obj = JToken.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    return false;
+                }
             }
             else
             {
-                //create default config
-                var jsonString = "";
-                
-                AppConfig = JsonConvert.DeserializeObject<AppConfigRoot>(jsonString);
-                listView.Adapter = new AppConfigAdapter(this, AppConfig.list);
+                return false;
             }
         }
-        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+
+        private void saveConfig(Dictionary<string, string> _cnfg)
         {
-            var ex = e.ExceptionObject as Exception;
-            //System.Diagnostics.Debug.WriteLine("Unhandled Exception. Message: {0}, Stack: {1}", ex.Message, ex.StackTrace);
-            Toast.MakeText(this,"Domain klaida",ToastLength.Short).Show();
+            if (_cnfg!=null && _cnfg.Count>0)
+            {
+                var str = JsonConvert.SerializeObject(_cnfg);
+                sharedprefs.Edit().PutString(AppConfigJson, str).Commit();
+                //ShowMe(GetString(Resource.String.message_saved));
+                //ShowMe(str);
+                Signalize.Good(this);
+                GetView();
+            }
         }
-        void TaskScheduler_UnobservedTaskException(object sender, System.Threading.Tasks.UnobservedTaskExceptionEventArgs e)
+        private void ShowMe(string message )
         {
-            e.SetObserved();
-            Toast.MakeText(this, "task klaida", ToastLength.Short).Show();
-            //System.Diagnostics.Debug.WriteLine("Unobserved Exception. Message: {0}, Stack: {1}", e.Exception.Message, e.Exception.StackTrace);
+            Toast.MakeText(this, message, ToastLength.Long).Show();
+        }
+
+        private void GetView()
+        {
+            var jsonStr = sharedprefs.GetString(AppConfigJson, string.Empty);
+            //ShowMe(jsonStr);
+            if (!string.IsNullOrEmpty(jsonStr) && IsValidJson(jsonStr))
+            {
+                cnfg = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+                wsParam.aparatoid = cnfg["aparato_id"];
+                wsParam.user_id = cnfg["service_key"];
+                wsParam.ws_url = cnfg["ws2Url"];
+                wsParam.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
+                // reikia uzkrauti parametru sarasa
+                listView.Adapter = new AppConfAdapter(this, cnfg);
+            }
         }
     }
 }

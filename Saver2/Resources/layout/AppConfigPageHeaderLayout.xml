@@ -38,6 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
     <ListView
+        android:divider="#3FB9E3"
+        android:dividerHeight="2px"
         android:layout_below="@+id/acphlSpace3"
         android:layout_above="@+id/acphlSpace4"
         android:minWidth="25px"
@@ -46,8 +48,24 @@
         android:layout_height="match_parent"
         android:id="@+id/ConfiglistView" />
     <Space
-        android:layout_above="@+id/ButtonConfigSave"
+        android:layout_above="@+id/acphlGetConfEdtTxt"
         android:id="@+id/acphlSpace4"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <EditText
+        android:hint="@string/hintScanConfig"
+        android:maxLines = "1"
+        android:focusedByDefault = "true"
+        android:textColorHint="#ffffff"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/acphlSpace5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/acphlGetConfEdtTxt" />
+
+    <Space
+        android:layout_above="@+id/ButtonConfigSave"
+        android:id="@+id/acphlSpace5"
         android:layout_width="match_parent"
         android:layout_height="20dp"/>
     <Button

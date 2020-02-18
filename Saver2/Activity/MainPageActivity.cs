@@ -23,6 +23,7 @@ using Saver2.BroadcastReceivers;
 using Android.Net;
 using Android.Support.Graphics.Drawable;
 using Android.Graphics.Drawables;
+using Newtonsoft.Json.Linq;
 
 namespace Saver2.Activity
 {
@@ -42,7 +43,7 @@ namespace Saver2.Activity
         ImageView imageView;
         AnimatedVectorDrawableCompat avd;
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             wsParam.online = false;
@@ -84,7 +85,6 @@ namespace Saver2.Activity
             avd = AnimatedVectorDrawableCompat.Create(this, Resource.Drawable.avd_feed);
             avd.RegisterAnimationCallback(new AnimatedCallback(this,imageView, avd));
         }
-
         private void Receiver_ConnectivityChanged(object sender, EventArgs e)
         {
             if (IsOnline())
@@ -99,20 +99,17 @@ namespace Saver2.Activity
                 avd.Start();
             }
         }
-
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
         protected override void OnStart()
         {
             base.OnStart();
             listView.Adapter = new MenuAdapter(this, app_menu);
         }
-
         protected override void OnResume()
         {
             base.OnResume();
@@ -129,7 +126,6 @@ namespace Saver2.Activity
             base.OnRestart();
             //GetAppConfig();
         }
-
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
             switch (e.Position)
@@ -182,63 +178,30 @@ namespace Saver2.Activity
                     break;
             }
         }
-        private void ProgressBarr()
-        {
-            builder = new AlertDialog.Builder(this);
-            builder.SetCancelable(false); // if you want user to wait for some process to finish,
-            builder.SetView(Resource.Layout.WaitingLayout);
-            dialog = builder.Create();
-            dialog.Window.SetBackgroundDrawableResource(Resource.Color.mtrl_btn_transparent_bg_color);
-        }
-
+        //private void ProgressBarr()
+        //{
+        //    builder = new AlertDialog.Builder(this);
+        //    builder.SetCancelable(false); // if you want user to wait for some process to finish,
+        //    builder.SetView(Resource.Layout.WaitingLayout);
+        //    dialog = builder.Create();
+        //    dialog.Window.SetBackgroundDrawableResource(Resource.Color.mtrl_btn_transparent_bg_color);
+        //}
         private void GetAppConfig()
         {
             sharedprefs = GetSharedPreferences(prefs, FileCreationMode.Private);
-            if (string.IsNullOrEmpty(sharedprefs.GetString(AppConfigJson, string.Empty).ToString()))
+            var jsonStr = sharedprefs.GetString(AppConfigJson, string.Empty);
+
+            if (string.IsNullOrEmpty(jsonStr) || !IsValidJson(jsonStr))
             {
                 StartActivity(typeof(ConfigPageActivity));
             }
             else
             {
-                AppConfig = JsonConvert.DeserializeObject<AppConfigRoot>(sharedprefs
-                    .GetString(AppConfigJson, string.Empty).ToString());
-
-                int index = AppConfig.list.FindIndex(a => a.param_name == "web_URL");
-                if (index >= 0)
-                {
-                    wsParam.ws_url = AppConfig.list[index].param_value;
-                }
-                else
-                {
-                    Toast.MakeText(this, GetString(Resource.String.message_no_webURL), ToastLength.Short).Show();
-                    return;
-                }
-
-
-                index = AppConfig.list.FindIndex(a => a.param_name == "user_id");
-                if (index >= 0)
-                {
-                    wsParam.user_id = AppConfig.list[index].param_value;
-                }
-                else
-                {
-                    Toast.MakeText(this, GetString(Resource.String.message_no_wsPass), ToastLength.Short).Show();
-                    return;
-                }
-
-
-                index = AppConfig.list.FindIndex(a => a.param_name == "aparatoid");
-                if (index >= 0)
-                {
-                    wsParam.aparatoid = AppConfig.list[index].param_value;
-                }
-                else
-                {
-                    Toast.MakeText(this, GetString(Resource.String.message_no_ID), ToastLength.Short).Show();
-                    return;
-                }
+                Dictionary<string, string> cnfg = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+                wsParam.aparatoid = cnfg["aparato_id"];
+                wsParam.user_id = cnfg["service_key"];
+                wsParam.ws_url = cnfg["ws2Url"];
                 wsParam.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
-                //Toast.MakeText(this, wsParam.lang, ToastLength.Long).Show();
             }
         }
         private bool IsOnline()
@@ -261,6 +224,31 @@ namespace Saver2.Activity
             {
                 //imageView.SetImageDrawable( context.GetDrawable(Resource.Drawable.feed_red));
                 imageView.Post(vectorDrawable.Start);
+            }
+        }
+        private static bool IsValidJson(string strInput)
+        {
+            strInput = strInput.Trim();
+            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
+                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            {
+                try
+                {
+                    var obj = JToken.Parse(strInput);
+                    return true;
+                }
+                catch (JsonReaderException jex)
+                {
+                    return false;
+                }
+                catch (Exception ex) //some other exception
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
             }
         }
     }

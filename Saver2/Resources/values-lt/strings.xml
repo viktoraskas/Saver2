@@ -21,6 +21,7 @@
   <string name="message_edit_config_parameter">Ar norite koreguoti nustatymą - </string>
   <string name="message_nothing_to_show">Nėra ko rodyti... </string>
   <string name="message_unknown_error">Nežinoma klaida... </string>
+  <string name="message_wrong_config_parameters">Netinkami nustatymai</string>
 
   <string name="page_name_login">Prisijungti</string>
   <string name="page_name_menu">Meniu</string>
@@ -62,7 +63,7 @@
   <string name="ActionLeftToScanItems">Rodyti nebaigtus</string>
   <string name="ActionQR">Skanuoti QR</string>
   <string name="ActionGetConfig">Konfiguruoti</string>
-
   <string name="TextTotals">Viso</string>
   <string name="TextAppVersion">Programos versija </string>
+  <string name="hintScanConfig">Prašom nuskanuoti nustatymus</string>
 </resources>

@@ -38,9 +38,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
     <AotAssemblies>false</AotAssemblies>
     <EnableLLVM>false</EnableLLVM>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
@@ -86,6 +86,7 @@
     <Compile Include="Activity\ScanConfigActivity.cs" />
     <Compile Include="Activity\SplashActivity.cs" />
     <Compile Include="Activity\Test.cs" />
+    <Compile Include="Adapters\AppConfAdapter.cs" />
     <Compile Include="Adapters\AppConfigAdapter.cs" />
     <Compile Include="Adapters\ManualAdapter.cs" />
     <Compile Include="Adapters\ManualMenuAdapter.cs" />

@@ -21,6 +21,7 @@
   <string name="message_edit_config_parameter">Do you want edit parameter - </string>
   <string name="message_nothing_to_show">There is nothing to show... </string>
   <string name="message_unknown_error">Unknown error... </string>
+  <string name="message_wrong_config_parameters">Wrong config parameters</string>
 
   <string name="page_name_login">Login</string>
   <string name="page_name_menu">Menu</string>
@@ -62,8 +63,8 @@
   <string name="ActionLeftToScanItems">Show incomplete</string>
   <string name="ActionQR">Scan QR</string>
   <string name="ActionGetConfig">Get CFG</string>
-  
   <string name="TextTotals">Totals</string>
   <string name="TextAppVersion">Application version </string>
+  <string name="hintScanConfig">Please scan config</string>
 
 </resources>

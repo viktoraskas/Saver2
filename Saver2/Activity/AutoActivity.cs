@@ -108,7 +108,7 @@ namespace Saver2.Activity
             builder.Show();
 
         }
-        private void BtnShowAllItems_Click(object sender, System.EventArgs e)
+        private void BtnShowAllItems_Click(object sender, EventArgs e)
         {
             if (operationList==null)
             {
@@ -169,14 +169,11 @@ namespace Saver2.Activity
                             {
                                 //if (string.IsNullOrEmpty(Intent.GetStringExtra("method")))
                                 //{
-                                    scanLog.Insert(0, new ScanLog2 { Scanned = wsParam.scaned, Message = GetString(Resource.String.message_wrong_operation), color = Color.Red });
-                                    wsParam.scaned = string.Empty;
-                                    wsParam.wsMethodName = string.Empty;
-                                    wsParam.session_id = string.Empty;
-                                    wsParam.stage = 0;
-                                    Toast.MakeText(this, GetString(Resource.String.message_wrong_operation), ToastLength.Short).Show();
-                                    Signalize.Error(this);
-                                    editText.Text = string.Empty;
+                                scanLog.Insert(0, new ScanLog2 { Scanned = wsParam.scaned, Message = GetString(Resource.String.message_wrong_operation), color = Color.Red });
+                                wsParam.scaned = editText.Text;
+                                wsParam.wsMethodName = wsParam.wsMethodDefault;
+                                wsParam.session_id = string.Empty;
+                                wsParam.stage += 1;
                                 //}
                                 //else
                                 //{
