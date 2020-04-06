@@ -24,7 +24,7 @@ using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Saver2.Adapters;
 using Android.Graphics;
 using Android.Support.V7.Widget;
-
+using Saver2.BroadcastReceivers;
 
 namespace Saver2.Activity
 {
@@ -43,6 +43,11 @@ namespace Saver2.Activity
         private List<OperationList> operationList;
         private dynamic currentAdapter;
         private string description;
+        AppBroadcastReceiver receiver;
+        IntentFilter filter;
+        AlarmManager alarmManager;
+        Intent logout;
+        PendingIntent pendingIntent;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -78,8 +83,24 @@ namespace Saver2.Activity
 
             ShowAllItems = false;
             AtiveLoc = string.Empty;
+            receiver = new AppBroadcastReceiver();
+            receiver.LogOut += Receiver_LogOut;
+            filter = new IntentFilter();
+            filter.AddAction("com.saver2.logout");
+            logout = new Intent("com.saver2.logout");
+            setAlarm(logout);
         }
 
+        private void Receiver_LogOut(object sender, EventArgs e)
+        {
+            FinishAffinity();
+            vsUtils.logOut(this);
+        }
+        public override void OnUserInteraction()
+        {
+            base.OnUserInteraction();
+            setAlarm(logout);
+        }
         private void EditText_LongClick(object sender, View.LongClickEventArgs e)
         {
             View view = LayoutInflater.Inflate(Resource.Layout.QuantityInputLayout, null);
@@ -200,12 +221,12 @@ namespace Saver2.Activity
                 {
                     try
                     {
-                        using (var client = new ws2ApiClient(wsParam.ws_url))
+                        using (var client = new ws2ApiClient(wsParam.ws2Url))
                         {
                             var values = new Dictionary<string, string>
                             {
-                             { "user_id", wsParam.user_id },
-                             { "aparatoid", wsParam.aparatoid },
+                             { "user_id", wsParam.service_key },
+                             { "aparatoid", wsParam.aparato_id },
                              { "session_id",  wsParam.session_id },
                              { "stage", wsParam.stage.ToString() },
                              { "lang", wsParam.lang},
@@ -300,6 +321,7 @@ namespace Saver2.Activity
         protected override void OnResume()
         {
             base.OnResume();
+            RegisterReceiver(receiver, filter);
             editText.RequestFocus();
             editText.ShowSoftInputOnFocus = false;
             recyclerView.SetAdapter(currentAdapter);
@@ -316,7 +338,8 @@ namespace Saver2.Activity
         protected override void OnPause()
         {
             base.OnPause();
-            currentAdapter=recyclerView.GetAdapter();
+            UnregisterReceiver(receiver);
+            currentAdapter =recyclerView.GetAdapter();
         }
 
         protected override void OnStop()
@@ -355,12 +378,12 @@ namespace Saver2.Activity
                     wsParam.stage = 0;
                     try
                     {
-                        using (var client = new ws2ApiClient(wsParam.ws_url))
+                        using (var client = new ws2ApiClient(wsParam.ws2Url))
                         {
                             var values = new Dictionary<string, string>
                         {
-                             { "user_id", wsParam.user_id },
-                             { "aparatoid", wsParam.aparatoid },
+                             { "user_id", wsParam.service_key },
+                             { "aparatoid", wsParam.aparato_id },
                              { "session_id",  wsParam.session_id },
                              { "stage", wsParam.stage.ToString() },
                              { "lang", wsParam.lang},
@@ -396,6 +419,30 @@ namespace Saver2.Activity
                 textViewAutoAtiveLoc.Text = string.Empty;
                 textViewAutoIcon.Visibility = ViewStates.Gone;
                 textViewAutoAtiveLoc.Visibility = ViewStates.Gone;
+            }
+        }
+        private void setAlarm(Intent intent)
+        {
+            if (wsParam.timeout != "0")
+            {
+                var t = 0;
+                int.TryParse(wsParam.timeout, out t);
+                pendingIntent = PendingIntent.GetBroadcast(this, 0, logout, PendingIntentFlags.UpdateCurrent);
+                alarmManager = (AlarmManager)GetSystemService(Context.AlarmService);
+                //alarmManager.Set(AlarmType.ElapsedRealtime, SystemClock.ElapsedRealtime() + t * 60 * 1000, pendingIntent);
+                long triggerAtTime = SystemClock.ElapsedRealtime() + (t * 60 * 1000);
+                if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.M)
+                {
+                    alarmManager.Cancel(pendingIntent);
+                    alarmManager.SetAndAllowWhileIdle(AlarmType.ElapsedRealtimeWakeup, triggerAtTime, pendingIntent);
+                    //Log.Info(TAG, "Alarm SetAndAllowWhileIdle Set");
+
+                }
+                else if (Android.OS.Build.VERSION.SdkInt == BuildVersionCodes.Kitkat || Android.OS.Build.VERSION.SdkInt == BuildVersionCodes.Lollipop)
+                {
+                    alarmManager.Cancel(pendingIntent);
+                    alarmManager.SetExact(AlarmType.ElapsedRealtimeWakeup, triggerAtTime, pendingIntent);
+                }
             }
         }
     }

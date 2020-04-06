@@ -40,7 +40,7 @@ namespace Saver2.Activity
             base.OnResume();
             internet = false;
 
-            sharedprefs = GetSharedPreferences(prefs, FileCreationMode.Private);
+            sharedprefs = GetSharedPreferences(AppConfigJson, FileCreationMode.Private);
             if (!string.IsNullOrEmpty(sharedprefs.GetString(AppConfigJson, string.Empty).ToString()))
             {
                 AppConfig = JsonConvert.DeserializeObject<AppConfigRoot>(sharedprefs
@@ -49,7 +49,7 @@ namespace Saver2.Activity
                 int index = AppConfig.list.FindIndex(a => a.param_name == "web_URL");
                 if (index >= 0)
                 {
-                    wsParam.ws_url = AppConfig.list[index].param_value;
+                    wsParam.ws2Url = AppConfig.list[index].param_value;
                 }
             }
 
@@ -60,9 +60,9 @@ namespace Saver2.Activity
             }
             else
             {
-                if (!string.IsNullOrEmpty(wsParam.ws_url))
+                if (!string.IsNullOrEmpty(wsParam.ws2Url))
                 {
-                    using (var client = new ws2ApiClient(wsParam.ws_url))
+                    using (var client = new ws2ApiClient(wsParam.ws2Url))
                     {
                         try
                         {

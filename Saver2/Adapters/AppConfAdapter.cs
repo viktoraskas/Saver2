@@ -16,9 +16,9 @@ namespace Saver2.Adapters
     {
 
         Context context;
-        private Dictionary<string, string> items;
+        private Dictionary<string, dynamic> items;
 
-        public AppConfAdapter(Context context, Dictionary<string, string> _items)
+        public AppConfAdapter(Context context, Dictionary<string, dynamic> _items)
         {
             this.context = context;
             this.items = _items;
@@ -60,7 +60,7 @@ namespace Saver2.Adapters
             //fill in your items
             //holder.Title.Text = "new text here";
             holder.ConfigParameterName.Text = items.ElementAt(position).Key;
-            holder.ConfigParameterValue.Text = items.ElementAt(position).Value;
+            holder.ConfigParameterValue.Text = items.ElementAt(position).Value.ToString();
             return view;
         }
 

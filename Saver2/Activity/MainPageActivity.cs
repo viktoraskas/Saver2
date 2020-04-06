@@ -27,21 +27,18 @@ using Newtonsoft.Json.Linq;
 
 namespace Saver2.Activity
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true, Theme = "@style/Theme.AppCompat.Light.NoActionBar")]
+    [Activity(Label = "@string/app_name", MainLauncher = false, Theme = "@style/Theme.AppCompat.Light.NoActionBar")]
     public class MainPageActivity : AppCompatActivity
     {
-        List<MenuOperation> menu;
         ListView listView;
-        private AppConfigRoot AppConfig;
-        ISharedPreferences sharedprefs;
-        AlertDialog.Builder builder;
-        AlertDialog dialog;
         private List<MenuClass1> app_menu;
-        bool internet;
         AppBroadcastReceiver receiver;
         IntentFilter filter;
         ImageView imageView;
         AnimatedVectorDrawableCompat avd;
+        AlarmManager alarmManager;
+        Intent logout;
+        PendingIntent pendingIntent;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -67,23 +64,42 @@ namespace Saver2.Activity
 
             TextView textViewAppVersion = FindViewById<TextView>(Resource.Id.txtAppVerion);
             textViewAppVersion.Text = GetString(Resource.String.TextAppVersion)+" - "+AppConfigClass.AppVersion;
-            GetAppConfig();
+            //GetAppConfig();
+            vsUtils.GetAppConfig(this);
 
             app_menu = new List<MenuClass1>
             {
                 new MenuClass1() { MenuName = "Auto", MenuIcon = "\uf02a" },
                 new MenuClass1() { MenuName = "Manual", MenuIcon = "\uf468" },
-                new MenuClass1() { MenuName = "Settings", MenuIcon = "\uf085" }
+                new MenuClass1() { MenuName = "Settings", MenuIcon = "\uf085" },
+                new MenuClass1() { MenuName = "Logout", MenuIcon = "\uf2f5" },
             };
 
-            receiver = new AppBroadcastReceiver(); ;
+            receiver = new AppBroadcastReceiver();
             receiver.ConnectivityChanged += Receiver_ConnectivityChanged;
+            receiver.LogOut += Receiver_LogOut;
             filter = new IntentFilter();
             filter.AddAction("android.net.conn.CONNECTIVITY_CHANGE");
+            filter.AddAction("com.saver2.logout");
 
             imageView = FindViewById<ImageView>(Resource.Id.imageView1);
             avd = AnimatedVectorDrawableCompat.Create(this, Resource.Drawable.avd_feed);
             avd.RegisterAnimationCallback(new AnimatedCallback(this,imageView, avd));
+            logout = new Intent("com.saver2.logout");
+            setAlarm(logout);
+        }
+
+        private void Receiver_LogOut(object sender, EventArgs e)
+        {
+            FinishAffinity();
+            vsUtils.logOut(this);
+        }
+
+        public override void OnUserInteraction()
+        {
+            base.OnUserInteraction();
+            setAlarm(logout);
+            //SessionManager.Instance.ExtendSession();
         }
         private void Receiver_ConnectivityChanged(object sender, EventArgs e)
         {
@@ -113,9 +129,15 @@ namespace Saver2.Activity
         protected override void OnResume()
         {
             base.OnResume();
-            GetAppConfig();
+            vsUtils.GetAppConfig(this);
             RegisterReceiver(receiver, filter);
         }
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            //SessionManager.Instance.EndTrackSession();
+        }
+
         protected override void OnPause()
         {
             base.OnPause();
@@ -124,7 +146,7 @@ namespace Saver2.Activity
         protected override void OnRestart()
         {
             base.OnRestart();
-            //GetAppConfig();
+            //vsUtils.GetAppConfig(this);
         }
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
@@ -136,7 +158,7 @@ namespace Saver2.Activity
                         //dialog.Show();
                         //try
                         //{
-                        //    using (var client = new ws2ApiClient(wsParam.ws_url))
+                        //    using (var client = new ws2ApiClient(wsParam.ws2Url))
                         //    {
                         //        string metod = Resources.GetString((Resource.String.ws_online)); // Checking is server alive
                         //        var result = await client.GetAsync<OnlineClass>(metod);
@@ -174,6 +196,11 @@ namespace Saver2.Activity
                         StartActivity(typeof(ConfigPageActivity));
                         break;
                     }
+                case 3:
+                    {
+                        SendBroadcast(logout);
+                        break;
+                    }
                 default:
                     break;
             }
@@ -186,24 +213,24 @@ namespace Saver2.Activity
         //    dialog = builder.Create();
         //    dialog.Window.SetBackgroundDrawableResource(Resource.Color.mtrl_btn_transparent_bg_color);
         //}
-        private void GetAppConfig()
-        {
-            sharedprefs = GetSharedPreferences(prefs, FileCreationMode.Private);
-            var jsonStr = sharedprefs.GetString(AppConfigJson, string.Empty);
+        //private void GetAppConfig()
+        //{
+        //    sharedprefs = GetSharedPreferences(prefs, FileCreationMode.Private);
+        //    var jsonStr = sharedprefs.GetString(AppConfigJson, string.Empty);
 
-            if (string.IsNullOrEmpty(jsonStr) || !IsValidJson(jsonStr))
-            {
-                StartActivity(typeof(ConfigPageActivity));
-            }
-            else
-            {
-                Dictionary<string, string> cnfg = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
-                wsParam.aparatoid = cnfg["aparato_id"];
-                wsParam.user_id = cnfg["service_key"];
-                wsParam.ws_url = cnfg["ws2Url"];
-                wsParam.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
-            }
-        }
+        //    if (string.IsNullOrEmpty(jsonStr) || !IsValidJson(jsonStr))
+        //    {
+        //        StartActivity(typeof(ConfigPageActivity));
+        //    }
+        //    else
+        //    {
+        //        Dictionary<string, string> cnfg = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
+        //        wsParam.aparato_id = cnfg["aparato_id"];
+        //        wsParam.service_key = cnfg["service_key"];
+        //        wsParam.ws2Url = cnfg["ws2Url"];
+        //        wsParam.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
+        //    }
+        //}
         private bool IsOnline()
         {
             var cm = (ConnectivityManager)GetSystemService(ConnectivityService);
@@ -226,29 +253,30 @@ namespace Saver2.Activity
                 imageView.Post(vectorDrawable.Start);
             }
         }
-        private static bool IsValidJson(string strInput)
+        
+        private void setAlarm(Intent intent)
         {
-            strInput = strInput.Trim();
-            if ((strInput.StartsWith("{") && strInput.EndsWith("}")) || //For object
-                (strInput.StartsWith("[") && strInput.EndsWith("]"))) //For array
+            if (wsParam.timeout != "0")
             {
-                try
+                var t = 0;
+                int.TryParse(wsParam.timeout, out t);
+                pendingIntent = PendingIntent.GetBroadcast(this, 0, logout, PendingIntentFlags.UpdateCurrent);
+                alarmManager = (AlarmManager)GetSystemService(Context.AlarmService);
+                //alarmManager.Set(AlarmType.ElapsedRealtime, SystemClock.ElapsedRealtime() + t * 60 * 1000, pendingIntent);
+                long triggerAtTime = SystemClock.ElapsedRealtime() + (t * 60 * 1000);
+                if (Android.OS.Build.VERSION.SdkInt >= BuildVersionCodes.M)
                 {
-                    var obj = JToken.Parse(strInput);
-                    return true;
+                    alarmManager.Cancel(pendingIntent);
+                    alarmManager.SetAndAllowWhileIdle(AlarmType.ElapsedRealtimeWakeup, triggerAtTime, pendingIntent);
+                    //Log.Info(TAG, "Alarm SetAndAllowWhileIdle Set");
+
                 }
-                catch (JsonReaderException jex)
+                else if (Android.OS.Build.VERSION.SdkInt == BuildVersionCodes.Kitkat || Android.OS.Build.VERSION.SdkInt == BuildVersionCodes.Lollipop)
                 {
-                    return false;
+                    alarmManager.Cancel(pendingIntent);
+                    alarmManager.SetExact(AlarmType.ElapsedRealtimeWakeup, triggerAtTime, pendingIntent);
                 }
-                catch (Exception ex) //some other exception
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
+
             }
         }
     }

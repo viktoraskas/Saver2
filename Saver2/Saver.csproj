@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Activity\AutoActivity.cs" />
     <Compile Include="Activity\ConfigPageActivity.cs" />
+    <Compile Include="Activity\FirstLogin.cs" />
     <Compile Include="Activity\fragments\FragDone.cs" />
     <Compile Include="Activity\fragments\FragToDo.cs" />
     <Compile Include="Activity\MainPageActivity.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Adapters\ScanLogAdapter_old.cs" />
     <Compile Include="Adapters\viewPagerAdapter.cs" />
     <Compile Include="BroadcastReceivers\AppBroadcastReceiver.cs" />
+    <Compile Include="BroadcastReceivers\NotificationAlarmHandler.cs" />
     <Compile Include="BroadcastReceivers\TestReceiver.cs" />
     <Compile Include="Helpers\AppConfigItemsClass.cs" />
     <Compile Include="Helpers\AutoModeStatus.cs" />
@@ -113,10 +115,12 @@
     <Compile Include="Helpers\rezAutoMode.cs" />
     <Compile Include="Helpers\ScanLog2.cs" />
     <Compile Include="Helpers\ScanLog.cs" />
+    <Compile Include="Helpers\SessionManager.cs" />
     <Compile Include="Helpers\Signalize.cs" />
     <Compile Include="Helpers\TaskExtensionsClass.cs" />
     <Compile Include="Helpers\TryWithAwaitInCatch.cs" />
     <Compile Include="Helpers\UserInfoClass.cs" />
+    <Compile Include="Helpers\vsUtils.cs" />
     <Compile Include="Helpers\ws2ApiClient.cs" />
     <Compile Include="Helpers\wsParamClass.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -357,6 +361,14 @@
     <AndroidResource Include="Resources\layout\DoneLayout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\FirstLogin.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\qr_code.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

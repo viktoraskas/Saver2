@@ -22,6 +22,8 @@
   <string name="message_nothing_to_show">Nėra ko rodyti... </string>
   <string name="message_unknown_error">Nežinoma klaida... </string>
   <string name="message_wrong_config_parameters">Netinkami nustatymai</string>
+  <string name="message_Login">Prašom prisiregistruoti</string>
+  <string name="message_remember">Prisiminti</string>
 
   <string name="page_name_login">Prisijungti</string>
   <string name="page_name_menu">Meniu</string>

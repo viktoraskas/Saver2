@@ -31,12 +31,12 @@ namespace Saver2.Activity
             #region Call ws for menu
             try
             {
-                using (var client = new ws2ApiClient(wsParam.ws_url))
+                using (var client = new ws2ApiClient(wsParam.ws2Url))
                 {
                     var values = new Dictionary<string, string>
                             {
-                             { "user_id", wsParam.user_id },
-                             { "aparatoid", wsParam.aparatoid },
+                             { "user_id", wsParam.service_key },
+                             { "aparatoid", wsParam.aparato_id },
                              { "lang", wsParam.lang},
                             };
 
