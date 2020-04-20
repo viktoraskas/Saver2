@@ -81,6 +81,7 @@ namespace Saver2.Activity
             filter = new IntentFilter();
             filter.AddAction("android.net.conn.CONNECTIVITY_CHANGE");
             filter.AddAction("com.saver2.logout");
+            filter.AddAction(Intent.ActionTimeTick);
 
             imageView = FindViewById<ImageView>(Resource.Id.imageView1);
             avd = AnimatedVectorDrawableCompat.Create(this, Resource.Drawable.avd_feed);
@@ -98,7 +99,11 @@ namespace Saver2.Activity
         public override void OnUserInteraction()
         {
             base.OnUserInteraction();
-            setAlarm(logout);
+            if (wsParam.timeout!="0")
+            {
+                wsParam.logout_time = DateTime.Now.AddMinutes(int.Parse(wsParam.timeout));
+            }
+            //setAlarm(logout);
             //SessionManager.Instance.ExtendSession();
         }
         private void Receiver_ConnectivityChanged(object sender, EventArgs e)
@@ -131,6 +136,11 @@ namespace Saver2.Activity
             base.OnResume();
             vsUtils.GetAppConfig(this);
             RegisterReceiver(receiver, filter);
+            if (wsParam.logout_time < DateTime.Now)
+            {
+                FinishAffinity();
+                vsUtils.logOut(this);
+            }
         }
         protected override void OnDestroy()
         {
@@ -205,32 +215,7 @@ namespace Saver2.Activity
                     break;
             }
         }
-        //private void ProgressBarr()
-        //{
-        //    builder = new AlertDialog.Builder(this);
-        //    builder.SetCancelable(false); // if you want user to wait for some process to finish,
-        //    builder.SetView(Resource.Layout.WaitingLayout);
-        //    dialog = builder.Create();
-        //    dialog.Window.SetBackgroundDrawableResource(Resource.Color.mtrl_btn_transparent_bg_color);
-        //}
-        //private void GetAppConfig()
-        //{
-        //    sharedprefs = GetSharedPreferences(prefs, FileCreationMode.Private);
-        //    var jsonStr = sharedprefs.GetString(AppConfigJson, string.Empty);
 
-        //    if (string.IsNullOrEmpty(jsonStr) || !IsValidJson(jsonStr))
-        //    {
-        //        StartActivity(typeof(ConfigPageActivity));
-        //    }
-        //    else
-        //    {
-        //        Dictionary<string, string> cnfg = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonStr);
-        //        wsParam.aparato_id = cnfg["aparato_id"];
-        //        wsParam.service_key = cnfg["service_key"];
-        //        wsParam.ws2Url = cnfg["ws2Url"];
-        //        wsParam.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
-        //    }
-        //}
         private bool IsOnline()
         {
             var cm = (ConnectivityManager)GetSystemService(ConnectivityService);

@@ -24,6 +24,8 @@
   <string name="message_wrong_config_parameters">Wrong config parameters</string>
   <string name="message_Login">Please login</string>
   <string name="message_remember">Remember me</string>
+  <string name="message_no_update">There is no update.</string>
+  <string name="message_no_update_path">Can\'t retrieve updates.</string>
   
   <string name="page_name_login">Login</string>
   <string name="page_name_menu">Menu</string>
@@ -64,7 +66,7 @@
   <string name="ActionScannedItems">Show all</string>
   <string name="ActionLeftToScanItems">Show incomplete</string>
   <string name="ActionQR">Scan QR</string>
-  <string name="ActionGetConfig">Get CFG</string>
+  <string name="ActionGetConfig">Update</string>
   <string name="TextTotals">Totals</string>
   <string name="TextAppVersion">Application version </string>
   <string name="hintScanConfig">Please scan config</string>

@@ -4799,11 +4799,11 @@ namespace Saver2
 			// aapt resource value: 0x7F0F004E
 			public const int message_Login = 2131689550;
 			
-			// aapt resource value: 0x7F0F0057
-			public const int message_nothing_to_show = 2131689559;
+			// aapt resource value: 0x7F0F0059
+			public const int message_nothing_to_show = 2131689561;
 			
-			// aapt resource value: 0x7F0F0056
-			public const int message_not_ready_yet = 2131689558;
+			// aapt resource value: 0x7F0F0058
+			public const int message_not_ready_yet = 2131689560;
 			
 			// aapt resource value: 0x7F0F0052
 			public const int message_no_ID = 2131689554;
@@ -4812,79 +4812,85 @@ namespace Saver2
 			public const int message_no_internet = 2131689555;
 			
 			// aapt resource value: 0x7F0F0054
-			public const int message_no_webURL = 2131689556;
+			public const int message_no_update = 2131689556;
 			
 			// aapt resource value: 0x7F0F0055
-			public const int message_no_wsPass = 2131689557;
+			public const int message_no_update_path = 2131689557;
 			
-			// aapt resource value: 0x7F0F0058
-			public const int message_please_wait = 2131689560;
+			// aapt resource value: 0x7F0F0056
+			public const int message_no_webURL = 2131689558;
 			
-			// aapt resource value: 0x7F0F0059
-			public const int message_remember = 2131689561;
+			// aapt resource value: 0x7F0F0057
+			public const int message_no_wsPass = 2131689559;
 			
 			// aapt resource value: 0x7F0F005A
-			public const int message_saved = 2131689562;
+			public const int message_please_wait = 2131689562;
 			
 			// aapt resource value: 0x7F0F005B
-			public const int message_scan_operation = 2131689563;
+			public const int message_remember = 2131689563;
 			
 			// aapt resource value: 0x7F0F005C
-			public const int message_unknown_error = 2131689564;
+			public const int message_saved = 2131689564;
 			
 			// aapt resource value: 0x7F0F005D
-			public const int message_wrong_config_parameters = 2131689565;
+			public const int message_scan_operation = 2131689565;
 			
 			// aapt resource value: 0x7F0F005E
-			public const int message_wrong_operation = 2131689566;
+			public const int message_unknown_error = 2131689566;
 			
 			// aapt resource value: 0x7F0F005F
-			public const int message_ws_allive = 2131689567;
+			public const int message_wrong_config_parameters = 2131689567;
 			
 			// aapt resource value: 0x7F0F0060
-			public const int message_ws_return_not_00 = 2131689568;
+			public const int message_wrong_operation = 2131689568;
 			
 			// aapt resource value: 0x7F0F0061
-			public const int mtrl_chip_close_icon_content_description = 2131689569;
+			public const int message_ws_allive = 2131689569;
 			
 			// aapt resource value: 0x7F0F0062
-			public const int page_name_auto = 2131689570;
+			public const int message_ws_return_not_00 = 2131689570;
 			
 			// aapt resource value: 0x7F0F0063
-			public const int page_name_login = 2131689571;
+			public const int mtrl_chip_close_icon_content_description = 2131689571;
 			
 			// aapt resource value: 0x7F0F0064
-			public const int page_name_menu = 2131689572;
+			public const int page_name_auto = 2131689572;
 			
 			// aapt resource value: 0x7F0F0065
-			public const int page_name_settings = 2131689573;
+			public const int page_name_login = 2131689573;
 			
 			// aapt resource value: 0x7F0F0066
-			public const int password_toggle_content_description = 2131689574;
+			public const int page_name_menu = 2131689574;
 			
 			// aapt resource value: 0x7F0F0067
-			public const int path_password_eye = 2131689575;
+			public const int page_name_settings = 2131689575;
 			
 			// aapt resource value: 0x7F0F0068
-			public const int path_password_eye_mask_strike_through = 2131689576;
+			public const int password_toggle_content_description = 2131689576;
 			
 			// aapt resource value: 0x7F0F0069
-			public const int path_password_eye_mask_visible = 2131689577;
+			public const int path_password_eye = 2131689577;
 			
 			// aapt resource value: 0x7F0F006A
-			public const int path_password_strike_through = 2131689578;
+			public const int path_password_eye_mask_strike_through = 2131689578;
 			
 			// aapt resource value: 0x7F0F006B
-			public const int prompt_password = 2131689579;
+			public const int path_password_eye_mask_visible = 2131689579;
 			
 			// aapt resource value: 0x7F0F006C
-			public const int prompt_username = 2131689580;
+			public const int path_password_strike_through = 2131689580;
 			
 			// aapt resource value: 0x7F0F006D
-			public const int search_menu_title = 2131689581;
+			public const int prompt_password = 2131689581;
 			
 			// aapt resource value: 0x7F0F006E
-			public const int status_bar_notification_info_overflow = 2131689582;
+			public const int prompt_username = 2131689582;
+			
+			// aapt resource value: 0x7F0F006F
+			public const int search_menu_title = 2131689583;
+			
+			// aapt resource value: 0x7F0F0070
+			public const int status_bar_notification_info_overflow = 2131689584;
 			
 			// aapt resource value: 0x7F0F0015
 			public const int TextAppVersion = 2131689493;
@@ -4892,14 +4898,14 @@ namespace Saver2
 			// aapt resource value: 0x7F0F0016
 			public const int TextTotals = 2131689494;
 			
-			// aapt resource value: 0x7F0F006F
-			public const int ws_c_1a = 2131689583;
-			
-			// aapt resource value: 0x7F0F0070
-			public const int ws_online = 2131689584;
-			
 			// aapt resource value: 0x7F0F0071
-			public const int ws_r_auth = 2131689585;
+			public const int ws_c_1a = 2131689585;
+			
+			// aapt resource value: 0x7F0F0072
+			public const int ws_online = 2131689586;
+			
+			// aapt resource value: 0x7F0F0073
+			public const int ws_r_auth = 2131689587;
 			
 			static String()
 			{
@@ -9373,7 +9379,10 @@ namespace Saver2
 		{
 			
 			// aapt resource value: 0x7F120000
-			public const int xamarin_essentials_fileprovider_file_paths = 2131886080;
+			public const int file_paths = 2131886080;
+			
+			// aapt resource value: 0x7F120001
+			public const int xamarin_essentials_fileprovider_file_paths = 2131886081;
 			
 			static Xml()
 			{

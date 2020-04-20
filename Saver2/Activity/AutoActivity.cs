@@ -99,7 +99,11 @@ namespace Saver2.Activity
         public override void OnUserInteraction()
         {
             base.OnUserInteraction();
-            setAlarm(logout);
+            //setAlarm(logout);
+            if (wsParam.timeout != "0")
+            {
+                wsParam.logout_time = DateTime.Now.AddMinutes(int.Parse(wsParam.timeout));
+            }
         }
         private void EditText_LongClick(object sender, View.LongClickEventArgs e)
         {
@@ -325,6 +329,11 @@ namespace Saver2.Activity
             editText.RequestFocus();
             editText.ShowSoftInputOnFocus = false;
             recyclerView.SetAdapter(currentAdapter);
+            if (wsParam.logout_time < DateTime.Now)
+            {
+                FinishAffinity();
+                vsUtils.logOut(this);
+            }
         }
 
         protected override void OnRestart()

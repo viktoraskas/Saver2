@@ -59,9 +59,10 @@ namespace Saver2.Activity
                 {
                     var cnfg = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(editText.Text);
                     wsParam.lang = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToUpper();
-                    if (string.IsNullOrWhiteSpace(wsParam.timeout))
+                    if (string.IsNullOrWhiteSpace(wsParam.timeout) || wsParam.timeout == "0")
                     {
                         wsParam.timeout = "30";
+                        wsParam.logout_time = DateTime.Now.AddMinutes(int.Parse(wsParam.timeout));
                     }
                     if (checkBox.Checked)
                     {

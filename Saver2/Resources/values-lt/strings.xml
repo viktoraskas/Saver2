@@ -24,6 +24,8 @@
   <string name="message_wrong_config_parameters">Netinkami nustatymai</string>
   <string name="message_Login">Prašom prisiregistruoti</string>
   <string name="message_remember">Prisiminti</string>
+  <string name="message_no_update">Atnaujinimų nėra.</string>
+  <string name="message_no_update_path">Atnaujinimai nepasiekiami.</string>
 
   <string name="page_name_login">Prisijungti</string>
   <string name="page_name_menu">Meniu</string>
@@ -64,7 +66,7 @@
   <string name="ActionScannedItems">Rodyti visus</string>
   <string name="ActionLeftToScanItems">Rodyti nebaigtus</string>
   <string name="ActionQR">Skanuoti QR</string>
-  <string name="ActionGetConfig">Konfiguruoti</string>
+  <string name="ActionGetConfig">Naujinti</string>
   <string name="TextTotals">Viso</string>
   <string name="TextAppVersion">Programos versija </string>
   <string name="hintScanConfig">Prašom nuskanuoti nustatymus</string>

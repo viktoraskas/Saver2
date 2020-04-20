@@ -20,6 +20,10 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.IO;
+using System.Net;
+using Android.Support.V4.Content;
+using Xamarin.Essentials;
 
 namespace Saver2.Activity
 {
@@ -32,6 +36,8 @@ namespace Saver2.Activity
         EditText GetConfEdtTxt;
         Dictionary<string, dynamic> cnfg;
         HideAndShowKeyboard kb;
+        Button getConfig;
+        string apkName = "saver2.apk";
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -47,7 +53,7 @@ namespace Saver2.Activity
             TextView textViewAppVersion = FindViewById<TextView>(Resource.Id.txtAppVerion);
             textViewAppVersion.Text = GetString(Resource.String.TextAppVersion) + " - " + AppConfigClass.AppVersion;
 
-            Button getConfig = FindViewById<Button>(Resource.Id.ButtonConfigScanQR);
+            getConfig = FindViewById<Button>(Resource.Id.ButtonConfigScanQR);
             getConfig.Click += GetConfig_Click;
 
             GetConfEdtTxt = FindViewById<EditText>(Resource.Id.acphlGetConfEdtTxt);
@@ -61,13 +67,108 @@ namespace Saver2.Activity
 
         private void GetConfig_Click(object sender, EventArgs e)
         {
-            //var jsonStr = sharedprefs.GetString(AppConfigJson, string.Empty);
             
-            //Dictionary<string, dynamic> keyValuePairs = 
-            //someObject.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).ToDictionary(prop => prop.Name, prop => prop.GetValue(someObject, null));
+            string av = AppInfo.Version.ToString();
+            string xv = DeviceInfo.Version.ToString();
+            string file = "saver.apk";
+            string vfile = "version.txt";
+            var xx = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            //var xx = (string)Android.OS.Environment.ExternalStorageDirectory + "/Android/data/"+ AppInfo.PackageName + "/files";
+            //Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData), file);
+            //ShowMe(zzz);
+            //return;
+            //string xxx = Path.Combine(Android.OS.Environment.GetFolderPath(Android.OS.Environment.SpecialFolder.LocalApplicationData);
+            //string directory = Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads);
 
-            //var jsonObj = Newtonsoft.Json.JsonConvert.SerializeObject(vsUtils.WsParamToDictionary());
-            //ShowMe(jsonStr);
+            string filelocal = Path.Combine(xx, file);
+            //Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads, file);
+            //Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), file);
+            string vfilelocal = Path.Combine(xx, vfile);
+            //Path.Combine(Android.OS.Environment.ExternalStorageDirectory.AbsolutePath, Android.OS.Environment.DirectoryDownloads, vfile);
+            //Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData), vfile);
+            //var tt = new Java.IO.File(filelocal);
+            //var xx = tt.AbsolutePath;
+            //ShowMe(filelocal);
+            //return;
+            //string path = wsParam.ws2Url +"cupd/"+ xv.Substring(0, xv.IndexOf(".")) + "/" + file;
+            //ShowMe(path);
+            Uri fileUrl = new Uri(wsParam.ws2Url + "cupd/" + xv.Substring(0, xv.IndexOf(".")) + "/" + file);
+            Uri vUrl = new Uri(wsParam.ws2Url + "cupd/" + xv.Substring(0, xv.IndexOf(".")) + "/" + vfile);
+            //return;
+
+            getConfig.Enabled = false;
+
+            if (File.Exists(filelocal) || File.Exists(vfilelocal))
+            {
+                try
+                {
+                    System.IO.File.Delete(filelocal);
+                    System.IO.File.Delete(vfilelocal);
+                }
+                catch (Exception)
+                {
+                    //ShowMe(GetString(Resource.String.message_unknown_error));
+                    //return;
+                }
+            }
+
+            try
+            {
+                WebClient wc = new WebClient();
+                wc.DownloadProgressChanged += Wc_DownloadProgressChanged;
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls 
+                                                                | System.Net.SecurityProtocolType.Tls11 
+                                                                | System.Net.SecurityProtocolType.Tls12;
+                wc.DownloadFile(fileUrl, filelocal);
+                wc.DownloadFile(vUrl, vfilelocal);
+            }
+            catch (WebException we)
+            {
+                //throw;
+                ShowMe(we.ToString());
+                //ShowMe(fileUrl.ToString());
+                //ShowMe(GetString(Resource.String.message_no_update_path));
+                getConfig.Enabled = true;
+                return;
+            }
+
+            if (File.Exists(vfilelocal)) //check version
+            {
+                string uversion = File.ReadLines(vfilelocal).First().Trim();
+                
+                if (av!=uversion) //update app
+                {
+                    if (File.Exists(filelocal))
+                    {
+                        var t = new Java.IO.File(filelocal);
+                        var x = t.AbsolutePath;
+                        //ShowMe(x);
+                        Java.IO.File xpath = new Java.IO.File(filelocal);
+                        Intent intent = new Intent(Intent.ActionInstallPackage, Android.Support.V4.Content.FileProvider.GetUriForFile(this, PackageName + ".fileProvider", xpath));
+                        intent.AddFlags(ActivityFlags.GrantReadUriPermission);
+                        intent.AddFlags(ActivityFlags.GrantWriteUriPermission);
+                        intent.AddFlags(ActivityFlags.GrantPersistableUriPermission);
+                        //intent.AddFlags(ActivityFlags.NewTask);
+                        StartActivity(intent);
+                    }
+                    else
+                    {
+                        ShowMe(GetString(Resource.String.message_no_update));
+                    }
+                } 
+                else
+                {
+                    ShowMe(GetString(Resource.String.message_no_update));
+                }
+             }
+
+            getConfig.Enabled = true;
+
+        }
+
+        private void Wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            //ShowMe("Please wait until download complete");
         }
 
         private void GetConfEdtTxt_KeyPress(object sender, View.KeyEventArgs e)
@@ -231,6 +332,15 @@ namespace Saver2.Activity
                     listView.Adapter = new AppConfAdapter(this, cnfg);
                 }
             }
+        }
+
+        private void ProgressBarr()
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.SetCancelable(false); // if you want user to wait for some process to finish,
+            builder.SetView(Resource.Layout.WaitingLayout);
+            dialog = builder.Create();
+            dialog.Window.SetBackgroundDrawableResource(Resource.Color.mtrl_btn_transparent_bg_color);
         }
     }
 }

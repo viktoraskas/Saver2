@@ -8,7 +8,8 @@ namespace Saver2.BroadcastReceivers
 {
     [BroadcastReceiver(Enabled = true)]
 
-    [IntentFilter(new[] { "android.net.conn.CONNECTIVITY_CHANGE", "android.media.VOLUME_CHANGED_ACTION","com.saver2.logout" })]
+    [IntentFilter(new[] { "android.net.conn.CONNECTIVITY_CHANGE", "android.media.VOLUME_CHANGED_ACTION","com.saver2.logout",
+                            Intent.ActionScreenOff,Intent.ActionTimeTick })]
 
     public class AppBroadcastReceiver : BroadcastReceiver
     {
@@ -35,6 +36,13 @@ namespace Saver2.BroadcastReceivers
             if (intent.Action == "com.saver2.logout")
             {
                 LogOut?.Invoke(this, EventArgs.Empty);
+            }
+            if (intent.Action == Intent.ActionTimeTick)
+            {
+                if (wsParam.logout_time< DateTime.Now)
+                {
+                    LogOut?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
     }
