@@ -339,8 +339,8 @@ namespace Saver2.Activity
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.SetCancelable(false); // if you want user to wait for some process to finish,
             builder.SetView(Resource.Layout.WaitingLayout);
-            dialog = builder.Create();
-            dialog.Window.SetBackgroundDrawableResource(Resource.Color.mtrl_btn_transparent_bg_color);
+            //dialog = builder.Create();
+            //dialog.Window.SetBackgroundDrawableResource(Resource.Color.mtrl_btn_transparent_bg_color);
         }
     }
 }

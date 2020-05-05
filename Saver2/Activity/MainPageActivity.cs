@@ -136,7 +136,7 @@ namespace Saver2.Activity
             base.OnResume();
             vsUtils.GetAppConfig(this);
             RegisterReceiver(receiver, filter);
-            if (wsParam.logout_time < DateTime.Now)
+            if (wsParam.logout_time < DateTime.Now && wsParam.timeout != "0")
             {
                 FinishAffinity();
                 vsUtils.logOut(this);

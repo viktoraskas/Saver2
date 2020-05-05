@@ -329,7 +329,7 @@ namespace Saver2.Activity
             editText.RequestFocus();
             editText.ShowSoftInputOnFocus = false;
             recyclerView.SetAdapter(currentAdapter);
-            if (wsParam.logout_time < DateTime.Now)
+            if (wsParam.logout_time < DateTime.Now && wsParam.timeout != "0")
             {
                 FinishAffinity();
                 vsUtils.logOut(this);

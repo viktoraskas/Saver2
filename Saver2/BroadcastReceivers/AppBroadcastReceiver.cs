@@ -39,7 +39,7 @@ namespace Saver2.BroadcastReceivers
             }
             if (intent.Action == Intent.ActionTimeTick)
             {
-                if (wsParam.logout_time< DateTime.Now)
+                if (wsParam.logout_time< DateTime.Now && wsParam.timeout != "0")
                 {
                     LogOut?.Invoke(this, EventArgs.Empty);
                 }
